@@ -225,7 +225,7 @@ const int drv_proc_hdls_num = sizeof(drv_proc_hdls) / sizeof(struct rtw_proc_hdl
 static int rtw_drv_proc_open(struct inode *inode, struct file *file)
 {
 	/* struct net_device *dev = proc_get_parent_data(inode); */
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 17, 0)
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 17, 0))
 	ssize_t index = (ssize_t)PDE_DATA(inode);
 #else
     ssize_t index = (ssize_t)inode->i_private;
