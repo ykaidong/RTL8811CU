@@ -22,9 +22,9 @@
 net/ipx.h在Linux 5.15-rc1中已经被删除, 解决方法: 去除相关代码. [参考](https://github.com/aircrack-ng/rtl8188eus/pull/146/files)
 
 > error: unknown type name ‘mm_segment_t’
-
+>
 > error: implicit declaration of function ‘get_fs’
-
+>
 > error: ‘KERNEL_DS’ undeclared
 
 这一类错误实际上都与 set_fs() 有关, 而set_fs()已经在Linux 5.19之后被删除. [这个issue](https://github.com/coolsnowwolf/lede/issues/9170)提到可以删除set_fs()相关调用, 正好此源码中确实也是使用kernel_read()的, 故加了个条件宏, 去掉相关代码.
@@ -47,17 +47,17 @@ net/ipx.h在Linux 5.15-rc1中已经被删除, 解决方法: 去除相关代码. 
 接下来重启系统, 然后使用`lsusb`命令再次查看, 发现设备已经被识别:
 
 > Bus 003 Device 007: ID 31b2:0010 KTMicro KT USB Audio
-
+>
 > Bus 001 Device 006: ID 30fa:0300  USB OPTICAL MOUSE
-
+>
 > Bus 001 Device 005: ID 1a2c:0e24 China Resource Semico Co., Ltd USB Keyboard
-
+>
 > Bus 001 Device 004: ID 0424:2514 Microchip Technology, Inc. (formerly SMSC) USB 2.0 Hub
-
+>
 > *Bus 001 Device 003: ID 0bda:1a2b Realtek Semiconductor Corp. RTL8188GU 802.11n WLAN Adapter (Driver CDROM Mode)*
-
+>
 > Bus 001 Device 002: ID 8087:07e6 Intel Corp.
-
+>
 > Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 不过此时网卡工作在CDROM模式.
@@ -71,18 +71,18 @@ net/ipx.h在Linux 5.15-rc1中已经被删除, 解决方法: 去除相关代码. 
 使用ifconfig:
 
 > wlx6cb1583f05b7: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-
+>
 >         inet 192.168.6.107  netmask 255.255.255.0  broadcast 192.168.6.255
-
+>
 >         inet6 fe80::6762:951f:30b0:af5a  prefixlen 64  scopeid 0x20<link>
-
+>
 >         ether 6c:b1:58:3f:05:b7  txqueuelen 1000  (Ethernet)
-
+>
 >         RX packets 82  bytes 12361 (12.0 KiB)
-
+>
 >         RX errors 0  dropped 0  overruns 0  frame 0
-
+> 
 >         TX packets 32  bytes 5224 (5.1 KiB)
-
+>
 >         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
