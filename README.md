@@ -86,3 +86,14 @@ net/ipx.h在Linux 5.15-rc1中已经被删除, 解决方法: 去除相关代码. 
 >
 >         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
+
+不过机器关机后, 再次开机网卡还是在CDROM模式, 需要手动切换才行, 解决办法是在/lib/udev/rules.d/40-usb_modeswitch.rules ，在文件末尾 LABEL="modeswitch_rules_end" 前加入一行:
+
+> # TP-LINK TL-WDN5200H
+> ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="usb_modeswitch -KW -v 0bda -p 1a2b"
+
+待解决:
+
+使用 usb_modeswitch 命令后必须得拔出网卡再插入, 才会切换到正确的模式. 原因未知, 怀疑还是驱动的问题.
+
+
